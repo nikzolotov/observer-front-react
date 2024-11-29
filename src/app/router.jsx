@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppRoot } from "./routes/root";
 import { Home, homeLoader } from "./routes/home";
 import { Observation, observationLoader } from "./routes/observation";
-import { Tags } from "./routes/tags";
+import { Tags, tagsLoader } from "./routes/tags";
 
 const router = createBrowserRouter([
   {
@@ -21,8 +21,9 @@ const router = createBrowserRouter([
         loader: observationLoader,
       },
       {
-        path: "tags/:tagsIds",
+        path: "tags/:slugs",
         element: <Tags />,
+        loader: tagsLoader,
       },
     ],
   },

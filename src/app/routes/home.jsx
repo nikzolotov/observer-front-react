@@ -1,4 +1,5 @@
 import { useLoaderData, Link } from "react-router-dom";
+import qs from "qs";
 
 /**
  * Asynchronously loads observations data from the Strapi API,
@@ -7,10 +8,15 @@ import { useLoaderData, Link } from "react-router-dom";
  * @returns {Promise<Object>} An object containing the fetched observations data.
  */
 export const homeLoader = async () => {
+  const query = qs.stringify({
+    sort: "createdAt:desc",
+    pagination: {
+      pageSize: 20,
+    },
+  });
+
   const response = await fetch(
-    `${
-      import.meta.env.VITE_STRAPI_API_URL
-    }observations?sort=createdAt:desc&pagination[pageSize]=20`
+    `${import.meta.env.VITE_STRAPI_API_URL}observations?${query}`
   );
   const data = await response.json();
   return {
