@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppRoot } from "./routes/root";
-import { Home } from "./routes/home";
+import { Home, homeLoader } from "./routes/home";
 import { Observation } from "./routes/observation";
 import { Tags } from "./routes/tags";
 
@@ -8,12 +8,12 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <AppRoot />,
-    // loader: rootLoader,
     //   errorElement: <ErrorPage />,
     children: [
       {
         path: "",
         element: <Home />,
+        loader: homeLoader,
       },
       {
         path: "observation/:observationId",
@@ -32,4 +32,3 @@ export const AppRouter = () => {
 };
 
 // import ErrorPage from "./error-page";
-// import Contact from "./routes/contact";
