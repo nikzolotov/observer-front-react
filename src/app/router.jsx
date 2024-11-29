@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppRoot } from "./routes/root";
 import { Home, homeLoader } from "./routes/home";
-import { Observation } from "./routes/observation";
+import { Observation, observationLoader } from "./routes/observation";
 import { Tags } from "./routes/tags";
 
 const router = createBrowserRouter([
@@ -18,6 +18,7 @@ const router = createBrowserRouter([
       {
         path: "observation/:observationId",
         element: <Observation />,
+        loader: observationLoader,
       },
       {
         path: "tags/:tagsIds",

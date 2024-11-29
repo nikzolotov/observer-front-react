@@ -1,10 +1,24 @@
 import { useLoaderData } from "react-router-dom";
 
-// export const rootLoader = async () => {
-//   return { contacts: [{ id: "1" }] };
-// };
+export const observationLoader = async ({ params }) => {
+  const response = await fetch(
+    `${import.meta.env.VITE_STRAPI_API_URL}observations?filters[id][$eq]=${
+      params.observationId
+    }`
+  );
+  const data = await response.json();
+  return {
+    observation: data.data,
+  };
+};
 
 export const Observation = () => {
-  // const { contacts } = useLoaderData();
-  return <div>One observation</div>;
+  const { observation } = useLoaderData();
+  return (
+    <>
+      <h1>{observation[0].name}</h1>
+      <p>{observation[0].description}</p>
+      <p>{observation[0].createdAt}</p>
+    </>
+  );
 };

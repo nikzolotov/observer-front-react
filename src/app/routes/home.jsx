@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 
 /**
  * Asynchronously loads observations data from the Strapi API,
@@ -41,7 +41,7 @@ function ObservationList({ data }) {
 function ObservationListItem({ data }) {
   return (
     <li className="observations__item">
-      {data.id} - {data.name}
+      <Link to={`observation/${data.id}`}>{data.name}</Link>
     </li>
   );
 }
