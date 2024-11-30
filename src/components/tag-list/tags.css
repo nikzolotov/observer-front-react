@@ -8,11 +8,11 @@
   opacity: 1;
   display: inline-block;
   border-radius: var(--border-radius-full);
-  color: var(--text-primary);
+  color: var(--text-primary-dark);
   transition: all var(--animation-fast) ease-in-out;
 }
 .tag:hover {
-  color: var(--text-primary);
+  color: var(--text-primary-dark);
   transform: scale(1.07);
   transition: all var(--animation-fast) ease-in-out;
 }
@@ -55,6 +55,15 @@
 }
 .tag-green {
   background-color: #00c164;
+}
+
+@media (prefers-color-scheme: light) {
+  .tag {
+    color: var(--text-primary-dark);
+  }
+  .tag:hover {
+    color: var(--text-primary-dark);
+  }
 }
 
 .tag-yellow,

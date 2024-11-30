@@ -4,6 +4,7 @@ import qs from "qs";
 import { ObservationList } from "../../components/observation-list";
 import { TagList } from "../../components/tag-list";
 import { TagTitle } from "../../components/tag-title";
+import { Button } from "../../components/button";
 
 export const tagsLoader = async ({ params }) => {
   const selectedSlugs = params.slugs.split(",");
@@ -68,6 +69,9 @@ export const TagsRoute = () => {
 
   return (
     <>
+      <div className="right-top-navigation">
+        <Button to="/">Закрыть</Button>
+      </div>
       <TagTitle name={selectedSlugs.toString()} count={observationsTotal} />
       <TagList data={filteredTags} size="m" selectedSlugs={selectedSlugs} />
       <ObservationList data={observations} />

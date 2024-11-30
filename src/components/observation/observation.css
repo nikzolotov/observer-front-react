@@ -13,7 +13,7 @@
 }
 .observation__date {
   margin: var(--spacing-xs) 0 0 0;
-  color: var(--text-secondary);
+  color: var(--text-secondary-dark);
 }
 .observation__images {
   margin-top: var(--spacing-xxl);
@@ -26,4 +26,10 @@
 }
 .observation__image-mobile {
   max-width: 400px;
+}
+
+@media (prefers-color-scheme: light) {
+  .observation__date {
+    color: var(--text-secondary-light);
+  }
 }

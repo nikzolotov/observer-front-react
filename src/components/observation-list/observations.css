@@ -20,11 +20,11 @@
   display: block;
   overflow: hidden;
   margin-bottom: var(--spacing-xs);
-  color: var(--text-primary);
+  color: var(--text-primary-dark);
   border-radius: var(--border-radius-s);
 }
 .observations__link:hover {
-  color: var(--text-primary);
+  color: var(--text-primary-dark);
 }
 .observations__link:hover .observations__image {
   transform: scale(1.05);
@@ -41,14 +41,26 @@
   bottom: var(--spacing-xs);
   right: var(--spacing-xs);
   padding: 2px 6px;
-  background: var(--background-primary);
+  background: var(--background-primary-dark);
   border-radius: var(--border-radius-s);
   font-size: var(--body-3);
   line-height: var(--body-3-lh);
 }
 .observations__year {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--text-secondary-dark);
   font-size: var(--body-2);
   line-height: var(--body-2-lh);
+}
+
+@media (prefers-color-scheme: light) {
+  .observations__link {
+    color: var(--text-primary-light);
+  }
+  .observations__link:hover {
+    color: var(--text-primary-light);
+  }
+  .observations__year {
+    color: var(--text-secondary-light);
+  }
 }
