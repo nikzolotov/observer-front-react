@@ -1,0 +1,8 @@
+main {
+  padding: var(--spacing-m);
+}
+.right-top-navigation {
+  position: absolute;
+  top: var(--spacing-m);
+  right: var(--spacing-m);
+}

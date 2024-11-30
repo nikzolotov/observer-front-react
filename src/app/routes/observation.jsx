@@ -1,6 +1,9 @@
 import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
+import { Observation } from "../../components/observation";
+import { Button } from "../../components/button";
+
 export const observationLoader = async ({ params }) => {
   const query = qs.stringify({
     populate: ["tags", "media"],
@@ -20,35 +23,14 @@ export const observationLoader = async ({ params }) => {
   };
 };
 
-export const Observation = () => {
+export const ObservationRoute = () => {
   const { observation } = useLoaderData();
   return (
     <>
-      <h1>{observation[0].name}</h1>
-      <p>{observation[0].description}</p>
-      <p>
-        Теги:{" "}
-        {observation[0].tags.map((tag) => (
-          <span key={tag.id}>
-            <Link to={`/tags/${tag.slug}`}>{tag.name}</Link>
-            {tag.id !==
-              observation[0].tags[observation[0].tags.length - 1].id && ", "}
-          </span>
-        ))}
-      </p>
-      <p>{observation[0].createdAt}</p>
-      <div>
-        {observation[0].media.map((mediaItem, index) => (
-          <img
-            key={index}
-            src={`${import.meta.env.VITE_STRAPI_UPLOADS}${mediaItem.hash}${
-              mediaItem.ext
-            }`}
-            alt={`Observation media ${index + 1}`}
-            width={1000}
-          />
-        ))}
+      <div className="right-top-navigation">
+        <Button to="/">Закрыть</Button>
       </div>
+      <Observation data={observation[0]} />
     </>
   );
 };

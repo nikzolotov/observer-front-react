@@ -1,6 +1,9 @@
 import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
+import { ObservationList } from "../../components/observation-list";
+import { TagList } from "../../components/tag-list";
+
 export const homeLoader = async () => {
   const query = qs.stringify({
     populate: "media",
@@ -33,58 +36,12 @@ export const homeLoader = async () => {
   };
 };
 
-export const Home = () => {
+export const HomeRoute = () => {
   const { observations, tags } = useLoaderData();
   return (
     <>
-      <h1>Observations</h1>
-      <TagList data={tags} />
+      <TagList data={tags} size="m" />
       <ObservationList data={observations} />
     </>
   );
 };
-
-function TagList({ data }) {
-  return (
-    <div className="tags">
-      {data.map((node) => (
-        <span key={node.id}>
-          <Link to={`/tags/${node.slug}`}>{node.name}</Link>{" "}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-function ObservationList({ data }) {
-  return (
-    <ul className="observations">
-      {data.map((node) => (
-        <ObservationListItem data={node} key={node.id} />
-      ))}
-    </ul>
-  );
-}
-
-function ObservationListItem({ data }) {
-  return (
-    <li className="observations__item">
-      <Link to={`observation/${data.id}`}>
-        <img
-          width={200}
-          className="observations__image"
-          src={
-            data.media[0]
-              ? `${
-                  import.meta.env.VITE_STRAPI_UPLOADS +
-                  data.media[0].hash +
-                  data.media[0].ext
-                }`
-              : ""
-          }
-        />
-      </Link>
-      <p className="observations__year">{data.createdAt}</p>
-    </li>
-  );
-}

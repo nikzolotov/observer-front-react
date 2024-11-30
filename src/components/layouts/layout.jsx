@@ -1,12 +1,6 @@
 import * as React from "react";
-
-// import { Head } from '../seo';
+import "./layout.css";
 
 export const Layout = ({ children }) => {
-  return (
-    <>
-      {/* <Head title={title} /> */}
-      <div className="containter">{children}</div>
-    </>
-  );
+  return <main>{children}</main>;
 };

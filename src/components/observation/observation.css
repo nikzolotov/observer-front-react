@@ -1,0 +1,29 @@
+.observation__title {
+  margin: 0;
+}
+.observation__description {
+  margin: 0;
+  max-width: 50em;
+}
+.observation__link {
+  margin: var(--spacing-xxs) 0 0 0;
+}
+.observation .tags {
+  margin-top: var(--spacing-xs);
+}
+.observation__date {
+  margin: var(--spacing-xs) 0 0 0;
+  color: var(--text-secondary);
+}
+.observation__images {
+  margin-top: var(--spacing-xxl);
+}
+.observation__image {
+  display: block;
+  max-width: 1200px;
+  margin: 0 auto var(--spacing-xxl) auto;
+  border-radius: var(--border-radius-m);
+}
+.observation__image-mobile {
+  max-width: 400px;
+}

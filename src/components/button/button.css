@@ -1,0 +1,15 @@
+.button {
+  display: inline-flex;
+  height: 40px;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--animation-fast) ease-in-out;
+}
+.button:hover {
+  transform: scale(1.2);
+  transition: all var(--animation-fast) ease-in-out;
+}
+.button__title {
+  display: none;
+}

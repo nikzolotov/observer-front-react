@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppRoot } from "./routes/root";
-import { Home, homeLoader } from "./routes/home";
-import { Observation, observationLoader } from "./routes/observation";
-import { Tags, tagsLoader } from "./routes/tags";
+import { HomeRoute, homeLoader } from "./routes/home";
+import { ObservationRoute, observationLoader } from "./routes/observation";
+import { TagsRoute, tagsLoader } from "./routes/tags";
 
 const router = createBrowserRouter([
   {
@@ -12,17 +12,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <HomeRoute />,
         loader: homeLoader,
       },
       {
         path: "observation/:observationId",
-        element: <Observation />,
+        element: <ObservationRoute />,
         loader: observationLoader,
       },
       {
         path: "tags/:slugs",
-        element: <Tags />,
+        element: <TagsRoute />,
         loader: tagsLoader,
       },
     ],

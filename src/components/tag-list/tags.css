@@ -1,0 +1,67 @@
+.tags-s {
+  margin: calc(var(--spacing-xxs) * -1) 0 0 calc(var(--spacing-xxs) * -1);
+}
+.tags-m {
+  margin: calc(var(--spacing-xs) * -1) 0 0 calc(var(--spacing-xs) * -1);
+}
+.tag {
+  opacity: 1;
+  display: inline-block;
+  border-radius: var(--border-radius-full);
+  color: var(--text-primary);
+  transition: all var(--animation-fast) ease-in-out;
+}
+.tag:hover {
+  color: var(--text-primary);
+  transform: scale(1.07);
+  transition: all var(--animation-fast) ease-in-out;
+}
+.tag-s {
+  margin: var(--spacing-xxs) 0 0 var(--spacing-xxs);
+  padding: 3px 8px;
+  font-size: 12px;
+  line-height: 14px;
+}
+.tag-m {
+  margin: var(--spacing-xs) 0 0 var(--spacing-xs);
+  padding: 4px 12px;
+}
+.tag-gray {
+  background-color: #808080;
+}
+.tag-yellow {
+  background-color: #ecd91a;
+}
+.tag-orange {
+  background-color: #ffb522;
+}
+.tag-red {
+  background-color: #f55422;
+}
+.tag-pink {
+  background-color: #e51ca0;
+}
+.tag-purple {
+  background-color: #ac50cc;
+}
+.tag-ultramarine {
+  background-color: #3f58ea;
+}
+.tag-blue {
+  background-color: #2ba7ee;
+}
+.tag-aqua {
+  background-color: #11c8ba;
+}
+.tag-green {
+  background-color: #00c164;
+}
+
+.tag-yellow,
+.tag-yellow:hover,
+.tag-orange,
+.tag-orange:hover,
+.tag-aqua,
+.tag-aqua:hover {
+  color: var(--text-inverted);
+}

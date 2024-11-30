@@ -1,0 +1,6 @@
+.tag-title__count {
+  margin-left: var(--spacing-s);
+  font-size: var(--number-2);
+  font-weight: normal;
+  color: var(--text-secondary);
+}

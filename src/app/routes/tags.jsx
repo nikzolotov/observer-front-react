@@ -1,49 +1,34 @@
 import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
+import { ObservationList } from "../../components/observation-list";
+import { TagTitle } from "../../components/tag-title";
+
 export const tagsLoader = async ({ params }) => {
   const slugsArray = params.slugs.split(",");
 
-  const query = qs.stringify(
-    {
-      sort: "createdAt:asc",
-      filters: {
-        slug: {
-          $in: slugsArray,
-        },
+  const query = qs.stringify({
+    sort: "createdAt:asc",
+    filters: {
+      slug: {
+        $in: slugsArray,
       },
     },
-    {
-      encodeValuesOnly: true, // prettify URL
-    }
-  );
+  });
 
-  const observationsQuery = qs.stringify(
-    {
-      // filters: {
-      //   tags: {
-      //     $and: slugsArray.map((slug) => ({
-      //       slug: {
-      //         $eq: slug,
-      //       },
-      //     })),
-      //   },
-      // },
-      filters: {
-        $and: slugsArray.map((slug) => ({
-          tags: {
-            slug: {
-              $eq: slug,
-            },
+  const observationsQuery = qs.stringify({
+    sort: "createdAt:desc",
+    filters: {
+      $and: slugsArray.map((slug) => ({
+        tags: {
+          slug: {
+            $eq: slug,
           },
-        })),
-      },
-      populate: "media",
+        },
+      })),
     },
-    {
-      encodeValuesOnly: true, // prettify URL
-    }
-  );
+    populate: "media",
+  });
 
   console.log(observationsQuery);
 
@@ -65,62 +50,17 @@ export const tagsLoader = async ({ params }) => {
   };
 };
 
-export const Tags = () => {
+export const TagsRoute = () => {
   const { tags, observations } = useLoaderData();
   return (
     <>
-      <h1>
-        <TmpTitle data={tags} />
-      </h1>
+      <TagTitle
+        name={tags[0].name}
+        // count={observations.meta.pagination.total}
+        count={observations.length} // wrong number
+      />
       <ObservationList data={observations} />
       <dib>{observations.length}</dib>
     </>
   );
 };
-
-function TmpTitle({ data }) {
-  return (
-    // можно собрать строку заранее, обойтись без span и key
-    <>
-      {data.map((node) => (
-        <span key={node.id}>
-          {node.name}
-          {node.id !== data[data.length - 1].id && <>, </>}
-        </span>
-      ))}
-    </>
-  );
-}
-
-function ObservationList({ data }) {
-  return (
-    <ul className="observations">
-      {data.map((node) => (
-        <ObservationListItem data={node} key={node.id} />
-      ))}
-    </ul>
-  );
-}
-
-function ObservationListItem({ data }) {
-  return (
-    <li className="observations__item">
-      <Link to={`observation/${data.id}`}>
-        <img
-          width={200}
-          className="observations__image"
-          src={
-            data.media[0]
-              ? `${
-                  import.meta.env.VITE_STRAPI_UPLOADS +
-                  data.media[0].hash +
-                  data.media[0].ext
-                }`
-              : ""
-          }
-        />
-      </Link>
-      <p className="observations__year">{data.createdAt}</p>
-    </li>
-  );
-}
