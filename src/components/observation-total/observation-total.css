@@ -1,0 +1,17 @@
+.observation-total {
+  margin: var(--spacing-xxl) 0 0 0;
+  font-size: var(--body-2);
+  line-height: var(--body-2-lh);
+  color: var(--text-secondary-dark);
+}
+.observation-total__eyes {
+  display: inline-block;
+  margin-right: var(--spacing-xs);
+  transform: scale(-1, -1);
+}
+
+@media (prefers-color-scheme: light) {
+  .observation-total {
+    color: var(--text-secondary-light);
+  }
+}

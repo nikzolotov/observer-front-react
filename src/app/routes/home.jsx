@@ -1,7 +1,8 @@
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import qs from "qs";
 
 import { ObservationList } from "../../components/observation-list";
+import { ObservationTotal } from "../../components/observation-total";
 import { TagList } from "../../components/tag-list";
 
 export const homeLoader = async () => {
@@ -25,23 +26,25 @@ export const homeLoader = async () => {
     fetch(`${import.meta.env.VITE_STRAPI_API_URL}tags?${tagsQuery}`),
   ]);
 
-  const data = await Promise.all([
+  const [observationsData, tagsData] = await Promise.all([
     observationsResponse.json(),
     tagsResponse.json(),
   ]);
 
   return {
-    observations: data[0].data,
-    tags: data[1].data,
+    observations: observationsData.data,
+    observationsTotal: observationsData.meta.pagination.total,
+    tags: tagsData.data,
   };
 };
 
 export const HomeRoute = () => {
-  const { observations, tags } = useLoaderData();
+  const { observations, tags, observationsTotal } = useLoaderData();
   return (
     <>
       <TagList data={tags} size="m" />
       <ObservationList data={observations} />
+      <ObservationTotal total={observationsTotal} />
     </>
   );
 };
