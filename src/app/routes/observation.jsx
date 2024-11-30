@@ -1,18 +1,9 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
-/**
- * Asynchronously loads an observation data from the Strapi API
- * by its id passed as a route parameter.
- *
- * @param {Object} params - Route parameters.
- * @param {string} params.observationId - The id of the observation to be
- *   loaded.
- *
- * @returns {Promise<Object>} An object containing the loaded observation data.
- */
 export const observationLoader = async ({ params }) => {
   const query = qs.stringify({
+    populate: ["tags", "media"],
     filters: {
       id: {
         $eq: params.observationId,
@@ -35,7 +26,29 @@ export const Observation = () => {
     <>
       <h1>{observation[0].name}</h1>
       <p>{observation[0].description}</p>
+      <p>
+        Теги:{" "}
+        {observation[0].tags.map((tag) => (
+          <span key={tag.id}>
+            <Link to={`/tags/${tag.slug}`}>{tag.name}</Link>
+            {tag.id !==
+              observation[0].tags[observation[0].tags.length - 1].id && ", "}
+          </span>
+        ))}
+      </p>
       <p>{observation[0].createdAt}</p>
+      <div>
+        {observation[0].media.map((mediaItem, index) => (
+          <img
+            key={index}
+            src={`${import.meta.env.VITE_STRAPI_UPLOADS}${mediaItem.hash}${
+              mediaItem.ext
+            }`}
+            alt={`Observation media ${index + 1}`}
+            width={1000}
+          />
+        ))}
+      </div>
     </>
   );
 };

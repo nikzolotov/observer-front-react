@@ -4,6 +4,7 @@ import qs from "qs";
 export const tagsLoader = async ({ params }) => {
   const slugsArray = params.slugs.split(",");
   const query = qs.stringify({
+    sort: "createdAt:asc",
     filters: {
       slug: {
         $in: slugsArray,
@@ -27,7 +28,7 @@ export const Tags = () => {
       <h1>
         <TmpTitle data={tags} />
       </h1>
-      <div>Here goes tags</div>
+      <div>Here goes observations</div>
     </>
   );
 };

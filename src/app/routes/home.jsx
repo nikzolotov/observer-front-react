@@ -1,14 +1,9 @@
 import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
-/**
- * Asynchronously loads observations data from the Strapi API,
- * sorted by creation date in descending order, with a page size of 20.
- *
- * @returns {Promise<Object>} An object containing the fetched observations data.
- */
 export const homeLoader = async () => {
   const query = qs.stringify({
+    populate: "media",
     sort: "createdAt:desc",
     pagination: {
       pageSize: 20,
@@ -47,7 +42,22 @@ function ObservationList({ data }) {
 function ObservationListItem({ data }) {
   return (
     <li className="observations__item">
-      <Link to={`observation/${data.id}`}>{data.name}</Link>
+      <Link to={`observation/${data.id}`}>
+        <img
+          width={200}
+          className="observations__image"
+          src={
+            data.media[0]
+              ? `${
+                  import.meta.env.VITE_STRAPI_UPLOADS +
+                  data.media[0].hash +
+                  data.media[0].ext
+                }`
+              : ""
+          }
+        />
+      </Link>
+      <p className="observations__year">{data.createdAt}</p>
     </li>
   );
 }
