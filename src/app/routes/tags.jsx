@@ -2,24 +2,29 @@ import { useLoaderData, Link } from "react-router-dom";
 import qs from "qs";
 
 import { ObservationList } from "../../components/observation-list";
+import { TagList } from "../../components/tag-list";
 import { TagTitle } from "../../components/tag-title";
 
 export const tagsLoader = async ({ params }) => {
-  const slugsArray = params.slugs.split(",");
+  const selectedSlugs = params.slugs.split(",");
 
-  const query = qs.stringify({
-    sort: "createdAt:asc",
+  const tagsQuery = qs.stringify({
+    sort: "name:asc",
+    pagination: {
+      pageSize: 1000,
+    },
     filters: {
-      slug: {
-        $in: slugsArray,
-      },
+      isMain: false,
     },
   });
 
   const observationsQuery = qs.stringify({
     sort: "createdAt:desc",
+    pagination: {
+      pageSize: 1000,
+    },
     filters: {
-      $and: slugsArray.map((slug) => ({
+      $and: selectedSlugs.map((slug) => ({
         tags: {
           slug: {
             $eq: slug,
@@ -27,13 +32,11 @@ export const tagsLoader = async ({ params }) => {
         },
       })),
     },
-    populate: "media",
+    populate: ["media", "tags"],
   });
 
-  console.log(observationsQuery);
-
   const [tagsResponse, observationsResponse] = await Promise.all([
-    fetch(`${import.meta.env.VITE_STRAPI_API_URL}tags?${query}`),
+    fetch(`${import.meta.env.VITE_STRAPI_API_URL}tags?${tagsQuery}`),
     fetch(
       `${import.meta.env.VITE_STRAPI_API_URL}observations?${observationsQuery}`
     ),
@@ -47,20 +50,41 @@ export const tagsLoader = async ({ params }) => {
   return {
     tags: tagsData.data,
     observations: observationsData.data,
+    observationsTotal: observationsData.meta.pagination.total,
+    selectedSlugs: selectedSlugs,
   };
 };
 
 export const TagsRoute = () => {
-  const { tags, observations } = useLoaderData();
+  const { tags, observations, observationsTotal, selectedSlugs } =
+    useLoaderData();
+
+  // Filter tags by observations
+  const filteredTags = filterTagsByObservations(
+    tags,
+    observations,
+    selectedSlugs
+  );
+
   return (
     <>
-      <TagTitle
-        name={tags[0].name}
-        // count={observations.meta.pagination.total}
-        count={observations.length} // wrong number
-      />
+      <TagTitle name={selectedSlugs.toString()} count={observationsTotal} />
+      <TagList data={filteredTags} size="m" selectedSlugs={selectedSlugs} />
       <ObservationList data={observations} />
-      <dib>{observations.length}</dib>
     </>
   );
+};
+
+const filterTagsByObservations = (tags, observations, excludedSlugs) => {
+  const uniqueTagSlugs = new Set();
+
+  observations.forEach((observation) => {
+    observation.tags.forEach((tag) => {
+      if (!excludedSlugs.includes(tag.slug)) {
+        uniqueTagSlugs.add(tag.slug);
+      }
+    });
+  });
+
+  return tags.filter((tag) => uniqueTagSlugs.has(tag.slug));
 };

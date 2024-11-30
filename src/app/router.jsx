@@ -8,7 +8,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <AppRoot />,
-    //   errorElement: <ErrorPage />,
     children: [
       {
         path: "",
@@ -32,5 +31,3 @@ const router = createBrowserRouter([
 export const AppRouter = () => {
   return <RouterProvider router={router} />;
 };
-
-// import ErrorPage from "./error-page";
