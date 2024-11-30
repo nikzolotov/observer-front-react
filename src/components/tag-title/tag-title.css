@@ -2,5 +2,11 @@
   margin-left: var(--spacing-s);
   font-size: var(--number-2);
   font-weight: normal;
-  color: var(--text-secondary);
+  color: var(--text-secondary-dark);
+}
+
+@media (prefers-color-scheme: light) {
+  .tag-title__count {
+    color: var(--text-secondary-light);
+  }
 }
