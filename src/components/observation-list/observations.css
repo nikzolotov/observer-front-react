@@ -45,6 +45,7 @@
   border-radius: var(--border-radius-s);
   font-size: var(--body-3);
   line-height: var(--body-3-lh);
+  color: var(--text-primary-dark);
 }
 .observations__year {
   margin: 0;
