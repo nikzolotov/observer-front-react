@@ -10,24 +10,51 @@ export const homeLoader = async () => {
     },
   });
 
-  const response = await fetch(
-    `${import.meta.env.VITE_STRAPI_API_URL}observations?${query}`
-  );
-  const data = await response.json();
+  const tagsQuery = qs.stringify({
+    sort: "name:asc",
+    filters: {
+      isMain: true,
+    },
+  });
+
+  const [observationsResponse, tagsResponse] = await Promise.all([
+    fetch(`${import.meta.env.VITE_STRAPI_API_URL}observations?${query}`),
+    fetch(`${import.meta.env.VITE_STRAPI_API_URL}tags?${tagsQuery}`),
+  ]);
+
+  const data = await Promise.all([
+    observationsResponse.json(),
+    tagsResponse.json(),
+  ]);
+
   return {
-    observations: data.data,
+    observations: data[0].data,
+    tags: data[1].data,
   };
 };
 
 export const Home = () => {
-  const { observations } = useLoaderData();
+  const { observations, tags } = useLoaderData();
   return (
     <>
       <h1>Observations</h1>
+      <TagList data={tags} />
       <ObservationList data={observations} />
     </>
   );
 };
+
+function TagList({ data }) {
+  return (
+    <div className="tags">
+      {data.map((node) => (
+        <span key={node.id}>
+          <Link to={`/tags/${node.slug}`}>{node.name}</Link>{" "}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 function ObservationList({ data }) {
   return (
